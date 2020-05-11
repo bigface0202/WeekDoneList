@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '.././widgets/main_drawer.dart';
+import '../models/key_and_item_prov.dart';
 
 class MakeNewListScreen extends StatefulWidget {
   static const routeName = '/make-new-list';
-  final Function addMap;
-
-  MakeNewListScreen(this.addMap);
-
   @override
   _MakeNewListScreenState createState() => _MakeNewListScreenState();
 }
@@ -26,8 +24,7 @@ class _MakeNewListScreenState extends State<MakeNewListScreen> {
     for (int i = 0; i < _newItemListcontroller.length; i++) {
       array.add(_newItemListcontroller[i].text);
     }
-    widget.addMap(enteredTitle, array);
-
+    Provider.of<KeyAndItemProv>(context, listen: false).addMap(enteredTitle, array);
     Navigator.of(context).pushReplacementNamed('/');
   }
 

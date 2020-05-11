@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-import './models/transaction.dart';
+import '../models/transaction_prov.dart';
 
 class TransactionsList extends StatelessWidget {
-  final List<Transaction> transactions;
-
-  TransactionsList(this.transactions);
-
   @override
   Widget build(BuildContext context) {
+    final transaction = Provider.of<TransactionProv>(context);
     return ListView.builder(
       shrinkWrap: true,
       itemBuilder: (ctx, index) {
+        print(transaction.userTransactions[index].spentTime);
         return Dismissible(
-          key: ValueKey(transactions[index].id),
+          key: ValueKey(transaction.userTransactions[index].id),
           background: Container(
             color: Theme.of(context).errorColor,
             child: Icon(Icons.delete, color: Colors.white, size: 40),
@@ -69,7 +68,7 @@ class TransactionsList extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: FittedBox(
                       child: Text(
-                    '${transactions[index].spentTime} h',
+                    '${transaction.userTransactions[index].spentTime} h',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )),
                 ),
@@ -78,10 +77,10 @@ class TransactionsList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    '${transactions[index].subTitle}',
+                    '${transaction.userTransactions[index].subTitle}',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  Text('${transactions[index].title}',
+                  Text('${transaction.userTransactions[index].title}',
                       style: TextStyle(
                           color: Colors.grey,
                           fontSize: 16,
@@ -89,13 +88,13 @@ class TransactionsList extends StatelessWidget {
                 ],
               ),
               subtitle: Text(
-                DateFormat.yMMMMEEEEd().format(transactions[index].date),
+                DateFormat.yMMMMEEEEd().format(transaction.userTransactions[index].date),
               ),
             ),
           ),
         );
       },
-      itemCount: transactions.length,
+      itemCount: transaction.userTransactions.length,
     );
   }
 }

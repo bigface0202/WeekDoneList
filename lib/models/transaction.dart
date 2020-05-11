@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class Transaction {
+class Transaction with ChangeNotifier{
   String id;
   String title;
   String subTitle;

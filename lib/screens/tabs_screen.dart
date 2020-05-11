@@ -3,13 +3,8 @@ import 'package:flutter/material.dart';
 import './graph_screen.dart';
 import './index_screen.dart';
 import '.././widgets/main_drawer.dart';
-import '../models/transaction.dart';
-import '../models/key_and_item.dart';
 
 class TabsScreen extends StatefulWidget {
-  final List<Transaction> userTransactions;
-  final List<KeyAndItem> userDoneChoices;
-  TabsScreen(this.userTransactions, this.userDoneChoices);
 
   @override
   _TabsScreenState createState() => _TabsScreenState();
@@ -23,7 +18,7 @@ class _TabsScreenState extends State<TabsScreen> {
   void initState() {
     _pages = [
       {
-        'page': IndexScreen(widget.userTransactions, widget.userDoneChoices),
+        'page': IndexScreen(),
         'title': 'Week Done List',
       },
       {

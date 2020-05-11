@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:week_done_list/models/key_and_item.dart';
+import 'package:provider/provider.dart';
+
+import '../models/key_and_item_prov.dart';
+import '../models/transaction.dart';
+import '../models/transaction_prov.dart';
 
 class NewTransaction extends StatefulWidget {
-  final Function addTx;
-  final List<KeyAndItem> userDoneChoices;
-
-  NewTransaction(this.addTx, this.userDoneChoices);
-
   @override
   _NewTransactionState createState() => _NewTransactionState();
 }
@@ -33,13 +32,14 @@ class _NewTransactionState extends State<NewTransaction> {
       return;
     }
 
-    // StatefulWidgetでコンストラクタで定義した引数にはwidgetをつける
-    widget.addTx(
-      enteredTitle,
-      enteredItem,
-      enteredSpentTime,
-      _selectedDate,
+    final newTx = Transaction(
+      title: enteredTitle,
+      subTitle: enteredItem,
+      spentTime: enteredSpentTime,
+      date: _selectedDate,
+      id: DateTime.now().toString(),
     );
+    Provider.of<TransactionProv>(context, listen: false).addTransaction(newTx);
     // 戻る遷移（pushで進む）
     // この場合だと元の画面に戻る
     Navigator.of(context).pop();
@@ -84,11 +84,11 @@ class _NewTransactionState extends State<NewTransaction> {
                 onChanged: (newValue) {
                   setState(() {
                     _selectedKey = newValue;
-                    _selectedKeyNum = widget.userDoneChoices.indexWhere((userDoneChoices) => userDoneChoices.key == newValue);
+                    _selectedKeyNum = Provider.of<KeyAndItemProv>(context, listen: false).userDoneChoices.indexWhere((userDoneChoices) => userDoneChoices.key == newValue);
                     _selectedItem = null;
                   });
                 },
-                items: widget.userDoneChoices.map((tx) =>DropdownMenuItem(value:tx.key, child:Text(tx.key))).toList(),
+                items: Provider.of<KeyAndItemProv>(context, listen: false).userDoneChoices.map((tx) =>DropdownMenuItem(value:tx.key, child:Text(tx.key))).toList(),
               ),
             ],
           ),
@@ -112,7 +112,7 @@ class _NewTransactionState extends State<NewTransaction> {
                           _selectedItem = newValue;
                         });
                       },
-                      items: widget.userDoneChoices[_selectedKeyNum].items
+                      items: Provider.of<KeyAndItemProv>(context, listen: false).userDoneChoices[_selectedKeyNum].items
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
