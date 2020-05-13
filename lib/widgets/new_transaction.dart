@@ -8,6 +8,7 @@ import '../models/transaction.dart';
 import '../models/transaction_prov.dart';
 
 class NewTransaction extends StatefulWidget {
+  
   @override
   _NewTransactionState createState() => _NewTransactionState();
 }
@@ -63,6 +64,7 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
+    final useDoneChoices = Provider.of<KeyAndItemProv>(context, listen: false).userDoneChoices;
     return Container(
       padding: EdgeInsets.all(50),
       child: Column(
@@ -84,11 +86,11 @@ class _NewTransactionState extends State<NewTransaction> {
                 onChanged: (newValue) {
                   setState(() {
                     _selectedKey = newValue;
-                    _selectedKeyNum = Provider.of<KeyAndItemProv>(context, listen: false).userDoneChoices.indexWhere((userDoneChoices) => userDoneChoices.key == newValue);
+                    _selectedKeyNum = useDoneChoices.indexWhere((userDoneChoices) => userDoneChoices.key == newValue);
                     _selectedItem = null;
                   });
                 },
-                items: Provider.of<KeyAndItemProv>(context, listen: false).userDoneChoices.map((tx) =>DropdownMenuItem(value:tx.key, child:Text(tx.key))).toList(),
+                items: useDoneChoices.map((tx) =>DropdownMenuItem(value:tx.key, child:Text(tx.key))).toList(),
               ),
             ],
           ),
@@ -112,7 +114,7 @@ class _NewTransactionState extends State<NewTransaction> {
                           _selectedItem = newValue;
                         });
                       },
-                      items: Provider.of<KeyAndItemProv>(context, listen: false).userDoneChoices[_selectedKeyNum].items
+                      items: useDoneChoices[_selectedKeyNum].items
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,

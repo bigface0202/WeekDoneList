@@ -11,7 +11,6 @@ class TransactionsList extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       itemBuilder: (ctx, index) {
-        print(transaction.userTransactions[index].spentTime);
         return Dismissible(
           key: ValueKey(transaction.userTransactions[index].id),
           background: Container(
@@ -51,7 +50,16 @@ class TransactionsList extends StatelessWidget {
             );
           }, //消す前に確認できる
           onDismissed: (direction) {
-            //トランザクションから消す処理
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Delete ${transaction.userTransactions[index].subTitle}, ${DateFormat.yMMMMEEEEd().format(transaction.userTransactions[index].date)}',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            );
+            Provider.of<TransactionProv>(context, listen: false)
+                .removeTransaction(transaction.userTransactions[index].id);
           },
           child: Card(
             elevation: 5,
@@ -88,7 +96,8 @@ class TransactionsList extends StatelessWidget {
                 ],
               ),
               subtitle: Text(
-                DateFormat.yMMMMEEEEd().format(transaction.userTransactions[index].date),
+                DateFormat.yMMMMEEEEd()
+                    .format(transaction.userTransactions[index].date),
               ),
             ),
           ),
