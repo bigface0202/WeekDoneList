@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import './key_and_item_prov.dart';
+import './key_and_item.dart';
 import './transaction.dart';
+import './key_and_time.dart';
 
 class TransactionProv with ChangeNotifier {
   List<Transaction> _userTransactions = [
     Transaction(
       id: 't1',
-      title: 'Sports',
-      subTitle: 'Baseball',
+      title: 'Training',
+      subTitle: 'Back',
       spentTime: 2,
       date: DateTime.now(),
     ),
     Transaction(
       id: 't2',
-      title: 'Sports',
-      subTitle: 'Soccer',
+      title: 'Coding',
+      subTitle: 'Flutter',
       spentTime: 2,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't3',
+      title: 'Coding',
+      subTitle: 'Flutter',
+      spentTime: 3,
       date: DateTime.now(),
     ),
   ];
@@ -38,20 +45,30 @@ class TransactionProv with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeTransaction(String id){
-    final exsistingTransactionIndex = _userTransactions.indexWhere((tx) => tx.id == id);
+  void removeTransaction(String id) {
+    final exsistingTransactionIndex =
+        _userTransactions.indexWhere((tx) => tx.id == id);
     _userTransactions.removeAt(exsistingTransactionIndex);
     notifyListeners();
   }
 
-  void sumSpendTime(){
-    double totalSpentTime = 0.0;
-    List<Map<String, double>> spentTimeList = [];
+  sumSpendTime(List<KeyAndItem> keyAndItemList) {
+    // double totalSpentTime = 0.0;
+    List<KeyAndTime> _spentTimeList = [];
 
-    for (var i = 0; i < _userTransactions.length; i++){
-      if(_userTransactions[i].title == 'Sports'){
-        totalSpentTime += _userTransactions[i].spentTime;
+    for (var i = 0; i < keyAndItemList.length; i++) {
+      double _sumTime = 0;
+      for (var j = 0; j < _userTransactions.length; j++) {
+        if (keyAndItemList[i].key == _userTransactions[j].title) {
+          _sumTime += _userTransactions[j].spentTime;
+        }
       }
+      _spentTimeList.add(KeyAndTime(key:keyAndItemList[i].key, sumTime: _sumTime));
     }
+
+    // Sort
+    // If you change the order of a and b, you can change ascending and descending.
+    _spentTimeList.sort((a, b) => b.sumTime.compareTo(a.sumTime));
+    return _spentTimeList;
   }
 }

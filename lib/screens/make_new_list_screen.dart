@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '.././widgets/main_drawer.dart';
 import '../models/key_and_item_prov.dart';
+import '../models/transaction_prov.dart';
 
 class MakeNewListScreen extends StatefulWidget {
   static const routeName = '/make-new-list';
@@ -30,6 +31,11 @@ class _MakeNewListScreenState extends State<MakeNewListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final keys = Provider.of<KeyAndItemProv>(context);
+    final transaction = Provider.of<TransactionProv>(context);
+
+    print(transaction.sumSpendTime(keys.userDoneChoices)[2].key);
+    print(transaction.sumSpendTime(keys.userDoneChoices)[2].sumTime);
     return Scaffold(
       appBar: AppBar(
         title: Text('Make new list'),
