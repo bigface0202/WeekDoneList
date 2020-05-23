@@ -15,11 +15,12 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => TransactionProv(),
-        ),
-        ChangeNotifierProvider(
           create: (ctx) => KeyAndItemProv(),
-        )
+        ),
+        ChangeNotifierProxyProvider<KeyAndItemProv, TransactionProv>(
+          update: (ctx, keyitem, tx) =>
+              TransactionProv(keyitem.userDoneChoices),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

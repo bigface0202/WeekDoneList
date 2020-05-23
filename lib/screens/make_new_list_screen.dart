@@ -34,8 +34,6 @@ class _MakeNewListScreenState extends State<MakeNewListScreen> {
     final keys = Provider.of<KeyAndItemProv>(context);
     final transaction = Provider.of<TransactionProv>(context);
 
-    print(transaction.sumSpendTime(keys.userDoneChoices)[2].key);
-    print(transaction.sumSpendTime(keys.userDoneChoices)[2].sumTime);
     return Scaffold(
       appBar: AppBar(
         title: Text('Make new list'),

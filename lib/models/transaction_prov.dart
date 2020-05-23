@@ -29,6 +29,11 @@ class TransactionProv with ChangeNotifier {
     ),
   ];
 
+  final List<KeyAndItem> keyAndItemList;
+  
+  TransactionProv(this.keyAndItemList);
+  
+
   List<Transaction> get userTransactions {
     return [..._userTransactions];
   }
@@ -52,7 +57,7 @@ class TransactionProv with ChangeNotifier {
     notifyListeners();
   }
 
-  sumSpendTime(List<KeyAndItem> keyAndItemList) {
+  sumSpendTime() {
     // double totalSpentTime = 0.0;
     List<KeyAndTime> _spentTimeList = [];
 

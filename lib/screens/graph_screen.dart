@@ -48,7 +48,7 @@ class GraphScreen extends StatelessWidget {
           id: 'Sales',
           domainFn: (KeyAndTime sales, _) => sales.key,
           measureFn: (KeyAndTime sales, _) => sales.sumTime,
-          data: transaction.sumSpendTime(keys.userDoneChoices),
+          data: transaction.sumSpendTime(),
           // Set a label accessor to control the text of the arc label.
           labelAccessorFn: (KeyAndTime row, _) => '${row.key}: ${row.sumTime}',
         )
