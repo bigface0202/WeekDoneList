@@ -33,7 +33,6 @@ class GraphScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final keys = Provider.of<KeyAndItemProv>(context);
     final transaction = Provider.of<TransactionProv>(context);
     List<charts.Series<KeyAndTime, String>> _createSampleData() {
       // final data = [
@@ -55,31 +54,37 @@ class GraphScreen extends StatelessWidget {
       ];
     }
 
-    return Container(
-      padding: EdgeInsets.all(60),
-      child: charts.PieChart(
-        _createSampleData(),
-        animate: true,
-        // Add an [ArcLabelDecorator] configured to render labels outside of the
-        // arc with a leader line.
-        //
-        // Text style for inside / outside can be controlled independently by
-        // setting [insideLabelStyleSpec] and [outsideLabelStyleSpec].
-        //
-        // Example configuring different styles for inside/outside:
-        //       new charts.ArcLabelDecorator(
-        //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
-        //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
-        defaultRenderer: new charts.ArcRendererConfig(
-          arcWidth: 100,
-          arcRendererDecorators: [
-            new charts.ArcLabelDecorator(
-              insideLabelStyleSpec: new charts.TextStyleSpec(fontSize: 15),
-              outsideLabelStyleSpec: new charts.TextStyleSpec(fontSize: 15),
-            )
-          ],
-        ),
-      ),
-    );
+    return transaction.userTransactions.length <= 0
+        ? Center(
+            child: const Text('Nothing you done!'),
+          )
+        : Container(
+            padding: EdgeInsets.all(60),
+            child: charts.PieChart(
+              _createSampleData(),
+              animate: true,
+              // Add an [ArcLabelDecorator] configured to render labels outside of the
+              // arc with a leader line.
+              //
+              // Text style for inside / outside can be controlled independently by
+              // setting [insideLabelStyleSpec] and [outsideLabelStyleSpec].
+              //
+              // Example configuring different styles for inside/outside:
+              //       new charts.ArcLabelDecorator(
+              //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
+              //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
+              defaultRenderer: new charts.ArcRendererConfig(
+                arcWidth: 100,
+                arcRendererDecorators: [
+                  new charts.ArcLabelDecorator(
+                    insideLabelStyleSpec:
+                        new charts.TextStyleSpec(fontSize: 15),
+                    outsideLabelStyleSpec:
+                        new charts.TextStyleSpec(fontSize: 15),
+                  )
+                ],
+              ),
+            ),
+          );
   }
 }

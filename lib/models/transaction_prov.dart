@@ -1,38 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import './key_and_item.dart';
 import './transaction.dart';
 import './key_and_time.dart';
+import '../helpers/db_helper.dart';
 
 class TransactionProv with ChangeNotifier {
-  List<Transaction> _userTransactions = [
-    Transaction(
-      id: 't1',
-      title: 'Training',
-      subTitle: 'Back',
-      spentTime: 2,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Coding',
-      subTitle: 'Flutter',
-      spentTime: 2,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't3',
-      title: 'Coding',
-      subTitle: 'Flutter',
-      spentTime: 3,
-      date: DateTime.now(),
-    ),
-  ];
+  List<Transaction> _userTransactions = [];
 
   final List<KeyAndItem> keyAndItemList;
-  
+
   TransactionProv(this.keyAndItemList);
-  
 
   List<Transaction> get userTransactions {
     return [..._userTransactions];
@@ -48,12 +27,35 @@ class TransactionProv with ChangeNotifier {
     );
     _userTransactions.add(newTransaction);
     notifyListeners();
+    DBHelper.insert('user_transactions', {
+      'id': transaction.id,
+      'title': transaction.title,
+      'subtitle': transaction.subTitle,
+      'spent_time': transaction.spentTime,
+      'date': transaction.date.toString(),
+    });
   }
 
   void removeTransaction(String id) {
     final exsistingTransactionIndex =
         _userTransactions.indexWhere((tx) => tx.id == id);
     _userTransactions.removeAt(exsistingTransactionIndex);
+    notifyListeners();
+    DBHelper.delete('user_transactions', id);
+  }
+
+  Future<void> fetchAndSetTransactions() async {
+    final dataList = await DBHelper.getData('user_transactions');
+    _userTransactions = dataList
+        .map(
+          (item) => Transaction(
+              id: item['id'],
+              title: item['title'],
+              subTitle: item['subtitle'],
+              spentTime: item['spent_time'],
+              date: DateTime.parse(item['date'])),
+        )
+        .toList();
     notifyListeners();
   }
 
@@ -68,7 +70,8 @@ class TransactionProv with ChangeNotifier {
           _sumTime += _userTransactions[j].spentTime;
         }
       }
-      _spentTimeList.add(KeyAndTime(key:keyAndItemList[i].key, sumTime: _sumTime));
+      _spentTimeList
+          .add(KeyAndTime(key: keyAndItemList[i].key, sumTime: _sumTime));
     }
 
     // Sort
