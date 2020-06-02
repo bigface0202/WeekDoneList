@@ -8,9 +8,7 @@ import '../helpers/db_helper.dart';
 
 class TransactionProv with ChangeNotifier {
   List<Transaction> _userTransactions = [];
-
   final List<KeyAndItem> keyAndItemList;
-
   TransactionProv(this.keyAndItemList);
 
   List<Transaction> get userTransactions {
@@ -62,7 +60,6 @@ class TransactionProv with ChangeNotifier {
   sumSpendTime() {
     // double totalSpentTime = 0.0;
     List<KeyAndTime> _spentTimeList = [];
-
     for (var i = 0; i < keyAndItemList.length; i++) {
       double _sumTime = 0;
       for (var j = 0; j < _userTransactions.length; j++) {

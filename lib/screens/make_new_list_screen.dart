@@ -34,8 +34,6 @@ class _MakeNewListScreenState extends State<MakeNewListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final keys = Provider.of<KeyAndItemProv>(context);
-    final transaction = Provider.of<TransactionProv>(context);
 
     return Scaffold(
       appBar: AppBar(
