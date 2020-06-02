@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class KeyAndItem {
+class KeyAndItem with ChangeNotifier{
   String id;
   String key;
   List<String> items;

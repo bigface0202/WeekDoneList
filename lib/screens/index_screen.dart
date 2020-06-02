@@ -8,7 +8,6 @@ import '../widgets/transactions_list.dart';
 import '../widgets/new_transaction.dart';
 
 class IndexScreen extends StatefulWidget {
-
   @override
   _IndexScreenState createState() => _IndexScreenState();
 }
@@ -31,11 +30,14 @@ class _IndexScreenState extends State<IndexScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          TransactionsList(),
-        ],
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            TransactionsList(),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),

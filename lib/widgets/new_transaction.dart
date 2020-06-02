@@ -8,7 +8,6 @@ import '../models/transaction.dart';
 import '../models/transaction_prov.dart';
 
 class NewTransaction extends StatefulWidget {
-  
   @override
   _NewTransactionState createState() => _NewTransactionState();
 }
@@ -64,97 +63,108 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    final useDoneChoices = Provider.of<KeyAndItemProv>(context, listen: false).userDoneChoices;
-    return Container(
-      padding: EdgeInsets.all(50),
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text('What did you do?'),
-              DropdownButton<String>(
-                value: _selectedKey,
-                icon: Icon(Icons.arrow_drop_down),
-                iconSize: 30,
-                elevation: 16,
-                style: TextStyle(fontSize: 20, color: Colors.black),
-                underline: Container(
-                  height: 2,
-                  color: Colors.grey,
-                ),
-                onChanged: (newValue) {
-                  setState(() {
-                    _selectedKey = newValue;
-                    _selectedKeyNum = useDoneChoices.indexWhere((userDoneChoices) => userDoneChoices.key == newValue);
-                    _selectedItem = null;
-                  });
-                },
-                items: useDoneChoices.map((tx) =>DropdownMenuItem(value:tx.key, child:Text(tx.key))).toList(),
-              ),
-            ],
-          ),
-          _selectedKeyNum != null
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Which one?'),
-                    DropdownButton<String>(
-                      value: _selectedItem,
-                      icon: Icon(Icons.arrow_drop_down),
-                      iconSize: 30,
-                      elevation: 16,
-                      style: TextStyle(fontSize: 20, color: Colors.black),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.grey,
-                      ),
-                      onChanged: (newValue) {
-                        setState(() {
-                          _selectedItem = newValue;
-                        });
-                      },
-                      items: useDoneChoices[_selectedKeyNum].items
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+    final keyAndItem = Provider.of<KeyAndItemProv>(context, listen: false);
+    return Column(
+      children: <Widget>[
+        FutureBuilder(
+            future: Provider.of<KeyAndItemProv>(context, listen: false)
+                .fetchAndSetKeyAndItems(),
+            builder: (ctx, snapshot) =>
+                snapshot.connectionState == ConnectionState.waiting
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text('What did you do?'),
+                          DropdownButton<String>(
+                            value: _selectedKey,
+                            icon: Icon(Icons.arrow_drop_down),
+                            iconSize: 30,
+                            elevation: 16,
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                            underline: Container(
+                              height: 2,
+                              color: Colors.grey,
+                            ),
+                            onChanged: (newValue) {
+                              setState(() {
+                                print(newValue);
+                                _selectedKey = newValue;
+                                _selectedKeyNum = keyAndItem.userDoneChoices
+                                    .indexWhere((userDoneChoices) =>
+                                        userDoneChoices.key == newValue);
+                                _selectedItem = null;
+                              });
+                            },
+                            items: keyAndItem.userDoneChoices
+                                .map((tx) => DropdownMenuItem(
+                                    value: tx.key, child: Text(tx.key)))
+                                .toList(),
+                          ),
+                        ],
+                      )),
+        _selectedKeyNum != null
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text('Which one?'),
+                  DropdownButton<String>(
+                    value: _selectedItem,
+                    icon: Icon(Icons.arrow_drop_down),
+                    iconSize: 30,
+                    elevation: 16,
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.grey,
                     ),
-                  ],
-                )
-              : Container(),
-          TextField(
-            decoration: InputDecoration(labelText: 'Spent time'),
-            keyboardType: TextInputType.number,
-            controller: _spentTimeController,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _selectedItem = newValue;
+                      });
+                    },
+                    items: keyAndItem.userDoneChoices[_selectedKeyNum].items
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              )
+            : Container(),
+        TextField(
+          decoration: InputDecoration(labelText: 'Spent time'),
+          keyboardType: TextInputType.number,
+          controller: _spentTimeController,
+        ),
+        Container(
+          padding: EdgeInsets.all(10),
+          child: Text(
+            'Chosen date: ${DateFormat.yMMMd().format(_selectedDate)}',
+            style: TextStyle(fontSize: 20),
           ),
-          Container(
-            padding: EdgeInsets.all(10),
-            child: Text(
-              'Chosen date: ${DateFormat.yMMMd().format(_selectedDate)}',
-              style: TextStyle(fontSize: 20),
-            ),
-          ),
-          FlatButton(
-            color: Colors.green,
-            textColor: Colors.white,
-            child: Text('Change date'),
-            onPressed: _presentDatePicker,
-          ),
-          RaisedButton(
-            color: Colors.blue,
-            textColor: Colors.white,
-            child: Text('Submit!'),
-            onPressed: _submitData,
-          ),
-          IconButton(
-            icon: Icon(Icons.subdirectory_arrow_left),
-            onPressed: () => Navigator.of(context).pop(),
-          )
-        ],
-      ),
+        ),
+        FlatButton(
+          color: Colors.green,
+          textColor: Colors.white,
+          child: Text('Change date'),
+          onPressed: _presentDatePicker,
+        ),
+        RaisedButton(
+          color: Colors.blue,
+          textColor: Colors.white,
+          child: Text('Submit!'),
+          onPressed: _submitData,
+        ),
+        IconButton(
+          icon: Icon(Icons.subdirectory_arrow_left),
+          onPressed: () => Navigator.of(context).pop(),
+        )
+      ],
     );
   }
 }

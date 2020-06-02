@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:week_done_list/models/key_and_item.dart';
 
 import '.././widgets/main_drawer.dart';
 import '../models/key_and_item_prov.dart';
@@ -25,7 +26,9 @@ class _MakeNewListScreenState extends State<MakeNewListScreen> {
     for (int i = 0; i < _newItemListcontroller.length; i++) {
       array.add(_newItemListcontroller[i].text);
     }
-    Provider.of<KeyAndItemProv>(context, listen: false).addMap(enteredTitle, array);
+    print(array.join(','));
+    final newKeyItem = KeyAndItem(id: DateTime.now().toString(), key: enteredTitle, items: array);
+    Provider.of<KeyAndItemProv>(context, listen: false).addMap(newKeyItem);
     Navigator.of(context).pushReplacementNamed('/');
   }
 
