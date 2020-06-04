@@ -57,8 +57,7 @@ class TransactionProv with ChangeNotifier {
     notifyListeners();
   }
 
-  sumSpendTime() {
-    // double totalSpentTime = 0.0;
+  List<KeyAndTime> sumSpendTime() {
     List<KeyAndTime> _spentTimeList = [];
     for (var i = 0; i < keyAndItemList.length; i++) {
       double _sumTime = 0;
