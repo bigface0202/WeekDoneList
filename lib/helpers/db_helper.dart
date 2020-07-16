@@ -14,6 +14,8 @@ class DBHelper {
         'CREATE TABLE user_transactions(id TEXT PRIMARY KEY, title TEXT, subtitle TEXT, spent_time REAL, date TEXT)');
     db.execute(
         'CREATE TABLE user_done_choices(id TEXT PRIMARY KEY, key TEXT, items TEXT)');
+    // db.execute(
+    //     'CREATE TABLE user_spent_times(id TEXT PRIMARY KEY, key TEXT, time REAL)');
   }
 
   static Future<void> insert(String table, Map<String, Object> data) async {

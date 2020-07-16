@@ -27,14 +27,14 @@ class _MakeNewListScreenState extends State<MakeNewListScreen> {
       array.add(_newItemListcontroller[i].text);
     }
     print(array.join(','));
-    final newKeyItem = KeyAndItem(id: DateTime.now().toString(), key: enteredTitle, items: array);
+    final newKeyItem = KeyAndItem(
+        id: DateTime.now().toString(), key: enteredTitle, items: array);
     Provider.of<KeyAndItemProv>(context, listen: false).addMap(newKeyItem);
     Navigator.of(context).pushReplacementNamed('/');
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Make new list'),
@@ -67,7 +67,7 @@ class _MakeNewListScreenState extends State<MakeNewListScreen> {
                   SizedBox(width: 20),
                   Flexible(
                     child: TextField(
-                      decoration: InputDecoration(labelText: 'How many item?'),
+                      decoration: InputDecoration(labelText: 'How many items?'),
                       keyboardType: TextInputType.number,
                       controller: _itemNumController,
                       onChanged: (_) {

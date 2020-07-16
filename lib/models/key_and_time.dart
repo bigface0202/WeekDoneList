@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class KeyAndTime with ChangeNotifier{
+class KeyAndTime with ChangeNotifier {
   String key;
   double sumTime;
 
