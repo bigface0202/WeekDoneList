@@ -10,7 +10,7 @@ class KeyAndItemProv with ChangeNotifier {
     return [..._userDoneChoices];
   }
 
-  void addMap(KeyAndItem newKeyAndItem) {
+  Future<void> addMap(KeyAndItem newKeyAndItem) async {
     _userDoneChoices.add(newKeyAndItem);
     notifyListeners();
     DBHelper.insert('user_done_choices', {

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import './models/transaction_prov.dart';
-import './screens/tabs_screen.dart';
+// import './screens/tabs_screen.dart';
+import './screens/index_screen.dart';
 import './screens/make_new_list_screen.dart';
 import './screens/new_transaction_screen.dart';
 import './models/key_and_item_prov.dart';
@@ -24,10 +25,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
-        // home: MyHomePage(),
+        // home: IndexScreen(),
         initialRoute: '/',
         routes: {
-          '/': (ctx) => TabsScreen(),
+          '/': (ctx) => IndexScreen(),
           MakeNewListScreen.routeName: (ctx) => MakeNewListScreen(),
           NewTransactionScreen.routeName: (ctx) => NewTransactionScreen(),
         },

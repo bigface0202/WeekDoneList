@@ -24,6 +24,8 @@ class _TransactionsListState extends State<TransactionsList> {
               0
           ? ch
           : ListView.builder(
+              // ↓がないとスクロールできない
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: transactions.userTransactions.length,
               itemBuilder: (ctx, index) {

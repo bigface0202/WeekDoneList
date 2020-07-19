@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../widgets/transactions_list.dart';
 import '../models/transaction_prov.dart';
+import '../widgets/main_drawer.dart';
 
 class IndexScreen extends StatefulWidget {
   @override
@@ -10,10 +11,13 @@ class IndexScreen extends StatefulWidget {
 }
 
 class _IndexScreenState extends State<IndexScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Week done list'),
+      ),
+      drawer: MainDrawer(),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
