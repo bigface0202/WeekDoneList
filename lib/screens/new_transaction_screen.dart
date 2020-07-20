@@ -126,7 +126,6 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                           ),
                           onChanged: (newValue) {
                             setState(() {
-                              print(newValue);
                               _selectedKey = newValue;
                               _selectedKeyNum = keyAndItem.userDoneChoices
                                   .indexWhere((userDoneChoices) =>
