@@ -198,10 +198,6 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                       child: Text('Submit!'),
                       onPressed: _submitData,
                     ),
-                    // IconButton(
-                    //   icon: Icon(Icons.subdirectory_arrow_left),
-                    //   onPressed: () => Navigator.of(context).pop(),
-                    // )
                   ],
                 ),
               ),

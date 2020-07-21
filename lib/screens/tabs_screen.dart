@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './graph_screen.dart';
 import './index_screen.dart';
 import '.././widgets/main_drawer.dart';
+import '../models/key_and_item_prov.dart';
 
 /// Sample linear data type.
 
-
 class TabsScreen extends StatefulWidget {
-
   @override
   _TabsScreenState createState() => _TabsScreenState();
 }
