@@ -12,55 +12,60 @@ class GraphScreen extends StatefulWidget {
 }
 
 class _GraphScreenState extends State<GraphScreen> {
-  // @override
-  // void initState() {
-  //   print("init!");
-  //   super.initState();
-  // }
-
-  // @override
-  // void didChangeDependencies() {
-  //   Future.delayed(Duration.zero).then((_) {
-  //     Provider.of<KeyAndItemProv>(context, listen: false)
-  //         .fetchAndSetKeyAndItems();
-  //   });
-  //   print('change!');
-  //   super.didChangeDependencies();
-  // }
+  Future _loadingKey;
+  @override
+  void initState() {
+    _loadingKey = Provider.of<KeyAndItemProv>(context, listen: false)
+        .fetchAndSetKeyAndItems();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final transaction = Provider.of<TransactionProv>(context);
-    // // print(transaction.userTransactions.length);
-    // List<charts.Series<KeyAndTime, String>> _createSampleData() {
-    //   return [
-    //     new charts.Series<KeyAndTime, String>(
-    //       id: 'Key',
-    //       domainFn: (KeyAndTime keyandtime, _) => keyandtime.key,
-    //       measureFn: (KeyAndTime keyandtime, _) => keyandtime.sumTime,
-    //       data: transaction.sumSpendTime(),
-    //       // Set a label accessor to control the text of the arc label.
-    //       labelAccessorFn: (KeyAndTime row, _) => '${row.key}: ${row.sumTime}',
-    //     )
-    //   ];
-    // }
+    // List graph = transaction.sumSpendTime();
+    // 一回目はうまく呼び出されるが、2回目で空になる？
+    print(transaction.sumSpendTime()[0].key);
+    List<charts.Series<KeyAndTime, String>> _createSampleData() {
+      return [
+        new charts.Series<KeyAndTime, String>(
+          id: 'Key',
+          domainFn: (KeyAndTime keyandtime, _) => keyandtime.key,
+          measureFn: (KeyAndTime keyandtime, _) => keyandtime.sumTime,
+          data: transaction.sumSpendTime(),
+          // Set a label accessor to control the text of the arc label.
+          labelAccessorFn: (KeyAndTime row, _) => '${row.key}: ${row.sumTime}',
+        )
+      ];
+    }
+
     //sumSpendTimeを実行するには、KeyAndItemProvのfetchを実行する必要がある
-    return Container(
-      child: Text(transaction.sumSpendTime()[0].key),
-      // padding: EdgeInsets.all(60),
-      // child: charts.PieChart(
-      //   _createSampleData(),
-      //   animate: true,
-      //   defaultRenderer: new charts.ArcRendererConfig(
-      //     arcWidth: 100,
-      //     arcRendererDecorators: [
-      //       new charts.ArcLabelDecorator(
-      //         insideLabelStyleSpec: new charts.TextStyleSpec(fontSize: 15),
-      //         outsideLabelStyleSpec: new charts.TextStyleSpec(fontSize: 15),
-      //       )
-      //     ],
-      //   ),
-      // ),
+    return FutureBuilder(
+      future: _loadingKey,
+      builder: (ctx, snapshot) =>
+          snapshot.connectionState == ConnectionState.waiting
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Container(
+                  // child: Text(transaction.sumSpendTime()[0].key),
+                  padding: EdgeInsets.all(60),
+                  child: charts.PieChart(
+                    _createSampleData(),
+                    animate: true,
+                    defaultRenderer: new charts.ArcRendererConfig(
+                      arcWidth: 100,
+                      arcRendererDecorators: [
+                        new charts.ArcLabelDecorator(
+                          insideLabelStyleSpec:
+                              new charts.TextStyleSpec(fontSize: 15),
+                          outsideLabelStyleSpec:
+                              new charts.TextStyleSpec(fontSize: 15),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
     );
   }
 }

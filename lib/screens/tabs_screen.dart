@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:week_done_list/models/transaction_prov.dart';
 
 import './graph_screen.dart';
 import './index_screen.dart';
@@ -13,9 +14,11 @@ class TabsScreen extends StatefulWidget {
   _TabsScreenState createState() => _TabsScreenState();
 }
 
-class _TabsScreenState extends State<TabsScreen> {
+class _TabsScreenState extends State<TabsScreen>
+    with SingleTickerProviderStateMixin {
   List<Map<String, Object>> _pages;
   int _selectedPageIndex = 0;
+  TabController _tabController;
 
   @override
   void initState() {
