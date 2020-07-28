@@ -12,60 +12,69 @@ class GraphScreen extends StatefulWidget {
 }
 
 class _GraphScreenState extends State<GraphScreen> {
-  Future _loadingKey;
-  @override
-  void initState() {
-    _loadingKey = Provider.of<KeyAndItemProv>(context, listen: false)
-        .fetchAndSetKeyAndItems();
-    super.initState();
-  }
+  // Future _loadingKey;
+  // // @override
+  // // void initState() {
+  // //   _loadingKey = Provider.of<KeyAndItemProv>(context, listen: false)
+  // //       .fetchAndSetKeyAndItems();
+  // //   super.initState();
+  // // }
+
+  // @override
+  // void didChangeDependencies() {
+  //   _loadingKey = Provider.of<KeyAndItemProv>(context, listen: false)
+  //       .fetchAndSetKeyAndItems();
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
     final transaction = Provider.of<TransactionProv>(context);
     // List graph = transaction.sumSpendTime();
     // 一回目はうまく呼び出されるが、2回目で空になる？
-    print(transaction.sumSpendTime()[0].key);
+    print(transaction.sumSpendTime.length);
+
     List<charts.Series<KeyAndTime, String>> _createSampleData() {
       return [
         new charts.Series<KeyAndTime, String>(
           id: 'Key',
           domainFn: (KeyAndTime keyandtime, _) => keyandtime.key,
           measureFn: (KeyAndTime keyandtime, _) => keyandtime.sumTime,
-          data: transaction.sumSpendTime(),
-          // Set a label accessor to control the text of the arc label.
+          data: transaction.sumSpendTime,
           labelAccessorFn: (KeyAndTime row, _) => '${row.key}: ${row.sumTime}',
         )
       ];
     }
 
     //sumSpendTimeを実行するには、KeyAndItemProvのfetchを実行する必要がある
-    return FutureBuilder(
-      future: _loadingKey,
-      builder: (ctx, snapshot) =>
-          snapshot.connectionState == ConnectionState.waiting
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Container(
-                  // child: Text(transaction.sumSpendTime()[0].key),
-                  padding: EdgeInsets.all(60),
-                  child: charts.PieChart(
-                    _createSampleData(),
-                    animate: true,
-                    defaultRenderer: new charts.ArcRendererConfig(
-                      arcWidth: 100,
-                      arcRendererDecorators: [
-                        new charts.ArcLabelDecorator(
-                          insideLabelStyleSpec:
-                              new charts.TextStyleSpec(fontSize: 15),
-                          outsideLabelStyleSpec:
-                              new charts.TextStyleSpec(fontSize: 15),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-    );
+    // return FutureBuilder(
+    //   future: _loadingKey,
+    //   builder: (ctx, snapshot) =>
+    //       snapshot.connectionState == ConnectionState.waiting
+    //           ? Center(
+    //               child: CircularProgressIndicator(),
+    //             )
+    //           :
+    return transaction.sumSpendTime.length == 0
+        ? Container()
+        : Container(
+            // child: Text(transaction.sumSpendTime()[0].key),
+            padding: EdgeInsets.all(60),
+            child: charts.PieChart(
+              _createSampleData(),
+              animate: true,
+              defaultRenderer: new charts.ArcRendererConfig(
+                arcWidth: 100,
+                arcRendererDecorators: [
+                  new charts.ArcLabelDecorator(
+                    insideLabelStyleSpec:
+                        new charts.TextStyleSpec(fontSize: 15),
+                    outsideLabelStyleSpec:
+                        new charts.TextStyleSpec(fontSize: 15),
+                  )
+                ],
+              ),
+            ),
+          );
   }
 }
