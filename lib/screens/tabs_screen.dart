@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:week_done_list/models/transaction_prov.dart';
-
 import './graph_screen.dart';
 import './index_screen.dart';
 import '.././widgets/main_drawer.dart';
-import '../models/key_and_item_prov.dart';
 
 /// Sample linear data type.
 
@@ -18,7 +14,6 @@ class _TabsScreenState extends State<TabsScreen>
     with SingleTickerProviderStateMixin {
   List<Map<String, Object>> _pages;
   int _selectedPageIndex = 0;
-  TabController _tabController;
 
   @override
   void initState() {
@@ -32,6 +27,7 @@ class _TabsScreenState extends State<TabsScreen>
         'title': 'Week Done Graph',
       },
     ];
+    print("a");
     super.initState();
   }
 
@@ -52,23 +48,24 @@ class _TabsScreenState extends State<TabsScreen>
       drawer: MainDrawer(),
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
-          onTap: _selectPage,
-          unselectedItemColor: Colors.black26,
-          selectedItemColor: Colors.white,
-          currentIndex: _selectedPageIndex,
-          type: BottomNavigationBarType.shifting,
-          items: [
-            BottomNavigationBarItem(
-              backgroundColor: Colors.blue,
-              icon: Icon(Icons.check_box),
-              title: Text('Week Done List'),
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: Colors.blue,
-              icon: Icon(Icons.insert_chart),
-              title: Text('Week Done Graph'),
-            )
-          ]),
+        onTap: _selectPage,
+        unselectedItemColor: Colors.black26,
+        selectedItemColor: Colors.white,
+        currentIndex: _selectedPageIndex,
+        type: BottomNavigationBarType.shifting,
+        items: [
+          BottomNavigationBarItem(
+            backgroundColor: Colors.blue,
+            icon: Icon(Icons.check_box),
+            title: Text('Week Done List'),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Colors.blue,
+            icon: Icon(Icons.insert_chart),
+            title: Text('Week Done Graph'),
+          )
+        ],
+      ),
     );
   }
 }

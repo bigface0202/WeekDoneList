@@ -12,13 +12,14 @@ class GraphScreen extends StatefulWidget {
 }
 
 class _GraphScreenState extends State<GraphScreen> {
-  // Future _loadingKey;
-  // // @override
-  // // void initState() {
-  // //   _loadingKey = Provider.of<KeyAndItemProv>(context, listen: false)
-  // //       .fetchAndSetKeyAndItems();
-  // //   super.initState();
-  // // }
+  Future _loadingKey;
+  @override
+  void initState() {
+    // _loadingKey = Provider.of<KeyAndItemProv>(context, listen: false)
+    //     .fetchAndSetKeyAndItems();
+    print("a");
+    super.initState();
+  }
 
   // @override
   // void didChangeDependencies() {
