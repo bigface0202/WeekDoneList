@@ -16,7 +16,7 @@ class _TransactionsListState extends State<TransactionsList> {
       child: Container(
         padding: EdgeInsets.only(top: 265, bottom: 265),
         child: Center(
-          child: const Text('Nothing you done!'),
+          child: const Text('Week Done List empty'),
         ),
       ),
       builder: (ctx, transactions, ch) => transactions

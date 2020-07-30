@@ -14,9 +14,6 @@ class _IndexScreenState extends State<IndexScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Week done list'),
-      ),
       drawer: MainDrawer(),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,

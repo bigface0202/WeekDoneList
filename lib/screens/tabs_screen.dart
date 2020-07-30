@@ -25,7 +25,6 @@ class _TabsScreenState extends State<TabsScreen>
         'title': 'Week Done Graph',
       },
     ];
-    print("a");
     super.initState();
   }
 
