@@ -18,9 +18,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => KeyAndItemProv(),
         ),
-        ChangeNotifierProxyProvider<KeyAndItemProv, TransactionProv>(
-          update: (ctx, keyitem, tx) =>
-              TransactionProv(keyitem.userDoneChoices),
+        ChangeNotifierProvider(
+          create: (ctx) => TransactionProv(),
         ),
       ],
       child: MaterialApp(

@@ -4,7 +4,6 @@ import 'package:week_done_list/models/key_and_item.dart';
 
 import '.././widgets/main_drawer.dart';
 import '../models/key_and_item_prov.dart';
-import '../models/transaction_prov.dart';
 
 class MakeNewListScreen extends StatefulWidget {
   static const routeName = '/make-new-list';

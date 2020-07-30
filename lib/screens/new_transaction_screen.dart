@@ -126,7 +126,6 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                           ),
                           onChanged: (newValue) {
                             setState(() {
-                              print(newValue);
                               _selectedKey = newValue;
                               _selectedKeyNum = keyAndItem.userDoneChoices
                                   .indexWhere((userDoneChoices) =>
@@ -199,10 +198,6 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                       child: Text('Submit!'),
                       onPressed: _submitData,
                     ),
-                    // IconButton(
-                    //   icon: Icon(Icons.subdirectory_arrow_left),
-                    //   onPressed: () => Navigator.of(context).pop(),
-                    // )
                   ],
                 ),
               ),
