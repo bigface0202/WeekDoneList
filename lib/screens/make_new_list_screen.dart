@@ -67,7 +67,6 @@ class _MakeNewListScreenState extends State<MakeNewListScreen> {
     }
     setState(() {
       _isLoading = false;
-      print('aaa');
     });
     Navigator.of(context).pushReplacementNamed('/');
   }
