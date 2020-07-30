@@ -3,8 +3,6 @@ import './graph_screen.dart';
 import './index_screen.dart';
 import '.././widgets/main_drawer.dart';
 
-/// Sample linear data type.
-
 class TabsScreen extends StatefulWidget {
   @override
   _TabsScreenState createState() => _TabsScreenState();
