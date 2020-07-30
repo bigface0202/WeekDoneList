@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-import './key_and_item.dart';
 import './transaction.dart';
 import './key_and_time.dart';
 import '../helpers/db_helper.dart';
 
 class TransactionProv with ChangeNotifier {
   List<Transaction> _userTransactions = [];
-  final List<KeyAndItem> keyAndItemList;
-  TransactionProv(this.keyAndItemList);
 
   List<Transaction> get userTransactions {
     return [..._userTransactions];
@@ -58,20 +55,25 @@ class TransactionProv with ChangeNotifier {
   }
 
   List<KeyAndTime> get sumSpendTime {
+    // タイトル毎に使った時間のリスト
     List<KeyAndTime> _spentTimeList = [];
-    for (var i = 0; i < keyAndItemList.length; i++) {
+    // タイトルのリストを作成
+    List titleList = [];
+    for (var i = 0; i < _userTransactions.length; i++) {
+      titleList.add(_userTransactions[i].title);
+    }
+    // 重複するタイトルを削除
+    titleList = titleList.toSet().toList();
+    for (var i = 0; i < titleList.length; i++) {
       double _sumTime = 0;
       for (var j = 0; j < _userTransactions.length; j++) {
-        if (keyAndItemList[i].key == _userTransactions[j].title) {
+        if (titleList[i] == _userTransactions[j].title) {
           _sumTime += _userTransactions[j].spentTime;
         }
       }
-      _spentTimeList
-          .add(KeyAndTime(key: keyAndItemList[i].key, sumTime: _sumTime));
+      _spentTimeList.add(KeyAndTime(key: titleList[i], sumTime: _sumTime));
     }
-
-    // Sort
-    // If you change the order of a and b, you can change ascending and descending.
+    // Sort: If you change the order of a and b, you can change ascending and descending.
     _spentTimeList.sort((a, b) => b.sumTime.compareTo(a.sumTime));
     return _spentTimeList;
   }
