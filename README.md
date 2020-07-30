@@ -8,7 +8,8 @@ You can make the done list with time.
 And also, you can make new list.  
 
 TODO:
-- Check whether or not all items are filled
-- Add function of delete the unused list
-- Make graph of what did you done in a week
-- Make clear UI
+- [x] Check whether or not all items are filled
+- [ ] Add function of editing list
+- [x] Make graph of what did you done
+- [ ] Make graph in a week
+- [ ] Make clear UI
