@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:week_done_list/screens/user_list_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -45,7 +46,8 @@ class MainDrawer extends StatelessWidget {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed('/make-new-list');
+              Navigator.of(context)
+                  .pushReplacementNamed(UserListScreen.routeName);
             },
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:week_done_list/screens/user_list_screen.dart';
 
 import './models/transaction_prov.dart';
 import './screens/tabs_screen.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (ctx) => TabsScreen(),
+          UserListScreen.routeName: (ctx) => UserListScreen(),
           MakeNewListScreen.routeName: (ctx) => MakeNewListScreen(),
           NewTransactionScreen.routeName: (ctx) => NewTransactionScreen(),
         },
